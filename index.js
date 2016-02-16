@@ -1,32 +1,31 @@
 'use strict'
 
 var path = require('path')
-// var templatesDir = path.resolve(__dirname, 'templates')
 var EmailTemplate = require('email-templates').EmailTemplate
 let mailGun = require('./config/mailgun')
 var kue = require('kue')
-var EventEmitter = require('events').EventEmitter
+// var EventEmitter = require('events').EventEmitter
+const config = {
+  'verify-email': getTemplate('verify-email'),
+  'reset-password': getTemplate('reset-password')
+}
 
-var deliver = new EventEmitter()
+// var deliver = new EventEmitter()
 var jobs = kue.createQueue()
-kue.app.listen(3000)
+kue.app.listen(3002)
 
+// обработка транзакционных писем (type: postbox)
 jobs.process('postbox', function (job, done) {
-  deliver.emit(job.data.template, job.data, done)
-})
+  // deliver.emit(job.data.template, job.data, done)
+  let template = config[job.data.template]
 
-var templateDir = path.join(__dirname, 'templates', 'verify_email')
-const template = new EmailTemplate(templateDir)
-const subject = '[LibTuts] Please verify your email address'
-
-deliver.on('verifyEmail', function (data, done) {
-  template.render(data.params, function (err, results) {
+  template.render(job.data.params, function (err, results) {
     if (err) return done(err)
 
     mailGun.sendEmail({
-      to: [data.to],
+      to: [job.data.to],
       from: 'LibTuts <no-reply@libtuts.com>',
-      subject: subject,
+      subject: job.data.subject,
       html: results.html
       // text: results.text
     })
@@ -41,16 +40,33 @@ deliver.on('verifyEmail', function (data, done) {
   })
 })
 
+function getTemplate (name) {
+  return new EmailTemplate(path.resolve(__dirname, 'templates', name))
+}
 
+// deliver.on('verify-email', function (data, done) {
+//   let template = config[data.template]
 
+//   template.render(data.params, function (err, results) {
+//     if (err) return done(err)
 
-
-
-
-
-
-
-
+//     mailGun.sendEmail({
+//       to: [data.to],
+//       from: 'LibTuts <no-reply@libtuts.com>',
+//       subject: data.subject,
+//       html: results.html
+//       // text: results.text
+//     })
+//     .then(res => {
+//       console.log('success', res)
+//       done()
+//     })
+//     .catch(err => {
+//       console.log('error', err)
+//       done(err)
+//     })
+//   })
+// })
 
 // отправить письмо одному юзеру
 // mailGun.sendEmail({

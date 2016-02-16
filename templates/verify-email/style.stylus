@@ -1,0 +1,49 @@
+.btn
+  -webkit-appearance none
+  border 0
+  padding 0 1.2em
+  margin 0
+  border-radius 3px
+  line-height 40px
+  display inline-block
+  vertical-align middle
+  font-weight bold
+  cursor pointer
+  border 1px solid grey
+  background transparent 
+  color grey
+  white-space nowrap
+  text-decoration none
+  &:hover 
+    border 1px solid grey
+    background grey
+    color white
+    text-decoration none
+  &:focus
+    border 1px solid deepskyblue
+    background deepskyblue
+    color white
+    outline none
+
+.btn.btn-wide
+  width 100%
+
+.btn:disabled
+  opacity 0.3
+  cursor not-allowed
+  background inherit
+  color inherit
+
+// Action button
+.btn.btn-action
+  border 1px solid dodgerblue
+  background transparent 
+  color dodgerblue
+  &:hover 
+    background dodgerblue
+    color white
+  &:focus
+    border 1px solid dodgerblue
+    background dodgerblue
+    color white
+    outline none
