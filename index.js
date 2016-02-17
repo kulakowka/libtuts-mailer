@@ -12,7 +12,7 @@ const config = {
 
 // var deliver = new EventEmitter()
 var jobs = kue.createQueue()
-kue.app.listen(3002)
+kue.app.listen(process.env.PORT)
 
 // обработка транзакционных писем (type: postbox)
 jobs.process('postbox', function (job, done) {

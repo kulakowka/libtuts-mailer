@@ -1,0 +1,33 @@
+{
+  "apps": [
+    {
+      "name"      : "MAILER",
+      "script"    : "index.js",
+      "node_args" : "--harmony",
+      "autorestart": true,
+      "watch": true,
+      "ignore_watch": [
+        "node_modules", 
+        ".git"
+      ],
+      "env": {
+        "MAILGUN_PRIVATE_API": "key-2fea16609fb8a7434a05e84a4c480ac1",
+        "MAILGUN_PUBLIC_API": "pubkey-f9bac273cf8d0d292908442e4edec19b",
+        "PORT": 3002
+      },
+      "env_production" : {
+        "NODE_ENV": "production"
+      }
+    }
+  ],
+  "deploy" : {
+    "production" : {
+      "user" : "node",
+      "host" : "212.83.163.1",
+      "ref"  : "origin/master",
+      "repo" : "git@bitbucket.org:Kulakowka/libtuts-mailer.git",
+      "path" : "/var/www/production",
+      "post-deploy" : "npm install ; npm run start_production"
+    }
+  }
+}
