@@ -7,7 +7,8 @@ var kue = require('kue')
 // var EventEmitter = require('events').EventEmitter
 const config = {
   'verify-email': getTemplate('verify-email'),
-  'reset-password': getTemplate('reset-password')
+  'reset-password': getTemplate('reset-password'),
+  'password-changed': getTemplate('password-changed')
 }
 
 // var deliver = new EventEmitter()

@@ -1,11 +1,17 @@
-p 
+p Hi #{username}!
 
-p We heard that you lost your GitHub password. Sorry about that!
+p We heard that you lost your LibTuts password. Sorry about that!
 
 p But don’t worry! You can use the following link within the next day to reset your password:
 
-p https://github.com/password_reset/0106ca65d23c3701644829927b2c2b05e5d181c6e96ba4f892ce56bfa08382a5656d61696caa616b40746d746d2e7275a5666f726365c2
+p 
+  a.btn.btn-action(href=resetUrl) Reset password
 
-p If you don’t use this link within 24 hours, it will expire. To get a new password reset link, visit https://github.com/password_reset
+p Button not working? Paste the following link into your browser:
+p #{resetUrl}
 
-p Thanks, Your friends at GitHub
+p 
+  = "If you don’t use this link within 24 hours, it will expire. To get a new password reset link, visit "
+  a(href="http://libtuts.com/auth/recover") http://libtuts.com/auth/recover
+
+p Thanks, Your friends at LibTuts
